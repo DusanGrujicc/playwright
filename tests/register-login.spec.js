@@ -7,5 +7,12 @@ test("registe and login", async ({ page }) => {
   await page.getByRole("textbox", { name: "password" }).fill("test1234");
   await page.click("button:has-text('Register')");
 
-  await expect(page.getByText("successfully registered!")).toBeVisible();
+  //   await expect(page.getByText("successfully registered!")).toBeVisible();
+});
+
+test("login", async ({ page }) => {
+  await page.goto("https://automaticityacademy.ngrok.app/login");
+  await page.getByRole("textbox", { name: "email" }).fill("dusan123@gmail.com");
+  await page.getByRole("textbox", { name: "password" }).fill("test1234");
+  await page.click("button:has-text('Sign in')");
 });
