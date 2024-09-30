@@ -1,5 +1,5 @@
 
-const { test, page, expect } = require("@playwright/test");
+import { test, expect } from "@playwright/test";
 
 test.describe("test suite", async() =>{
   test.beforeEach('visit app', async({page})=>{
