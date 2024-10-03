@@ -57,7 +57,7 @@ test("form text input should both have values when typed into", async ({page})=>
 test("form submit button should be enabled", async()=>{
     await expect(loginPage.submitButton).toBeEnabled()
 })
-test("test forms can be focused ", async()=>{
+test("forms can be focused", async()=>{
     await loginPage.emailInput.click()
     await expect(loginPage.emailInput).toBeFocused()
      
@@ -65,12 +65,12 @@ test("test forms can be focused ", async()=>{
     await expect(loginPage.passwordInput).toBeFocused()
 })
 
-    test("test forms can be empty", async()=> {
+    test("forms can be empty", async()=> {
         await expect(loginPage.emailInput).toBeEmpty();
         await expect(loginPage.passwordInput).toBeEmpty()
     })
     
-test ("test forms should be in viewport", async({page})=>{
+test ("forms should be in viewport", async({page})=>{
     await expect(page.locator("form")).toBeInViewport()
     await expect(page.locator("form >> button")).toBeInViewport()
     await expect(page.locator("form >> input").nth(0)).toBeInViewport()
