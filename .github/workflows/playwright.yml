@@ -18,6 +18,7 @@ jobs:
       run: npx eslint
 
   audit:
+    needs: lint
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
@@ -27,6 +28,7 @@ jobs:
     - name: Check for vulnerabilities
       run: npm audit
   e2e-test:
+    needs: audit
     timeout-minutes: 60
     runs-on: ubuntu-latest
     steps:
