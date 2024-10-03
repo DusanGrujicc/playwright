@@ -5,9 +5,9 @@ import { RegisterPage } from "../pom/modules/ui/registerPage";
 
 let loginEmail, loginPassword;
 test.describe.configure({ mode: "serial" });
-test.describe("registed a user and log in ", () => {
+test.describe("registed a user and log in", () => {
   test("register a user with valid data", async ({ page }) => {
-    //generate random user credentials
+
     const { username, email, password } = generateUserCredentials(5);
     loginEmail = email;
     loginPassword = password;
@@ -91,3 +91,4 @@ test("Negative-Login with incorrect password", async ({ page }) => {
     "Incorrect password"
   );
 });
+//mala izmena
