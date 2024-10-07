@@ -1,13 +1,19 @@
 import { test, expect } from "@playwright/test";
-import { generateUserCredentials, HEADING, URLS, utils } from "../fixtures";
+import {
+  generateUserCredentials,
+  HEADING,
+  URLS,
+  utils,
+  errorMessages,
+} from "../fixtures";
 import { LoginPage } from "../pom/modules/ui/loginPage";
 import { RegisterPage } from "../pom/modules/ui/registerPage";
+import { ERROR_MESSAGES } from "../fixtures/errorMessages";
 
 let loginEmail, loginPassword;
 test.describe.configure({ mode: "serial" });
 test.describe("registed a user and log in", () => {
   test("register a user with valid data", async ({ page }) => {
-
     const { username, email, password } = generateUserCredentials(5);
     loginEmail = email;
     loginPassword = password;
@@ -20,11 +26,6 @@ test.describe("registed a user and log in", () => {
     await expect(page.locator("h1")).toBeVisible();
     await expect(page.locator("h1")).toHaveText(HEADING["REGISTER"]);
 
-    //fill in form and register
-    await page.locator("#username").fill(username);
-    await page.locator("#email").fill(email);
-    await page.locator("#password").fill(password);
-    await page.locator("button").click();
     //fill in form and submit
     registerPage.register(username, email, password);
 
@@ -35,13 +36,13 @@ test.describe("registed a user and log in", () => {
 
   test("log in with registered user", async ({ page }) => {
     await page.goto(URLS["LOGIN"]);
-    await expect(page.locator(loginPage.heading)).toBeVisible();
-    await expect(page.locator(loginPage.heading)).toHaveText(HEADING["LOGIN"]);
+    await expect(page.locator("h1")).toBeVisible();
+    await expect(page.locator("h1")).toHaveText(HEADING["LOGIN"]);
 
     const loginPage = new LoginPage(page);
 
     //fill in form and submit
-    loginPage.login(email, password);
+    loginPage.login(loginEmail, loginPassword);
 
     //wait for and verify redirect
     await page.waitForURL(URLS["DASHBOARD"]);
@@ -52,9 +53,9 @@ test.describe("registed a user and log in", () => {
 test("Negative-Registe with existing username", async ({ page }) => {
   const registerPage = new RegisterPage(page);
   await registerPage.invalidRegister(page, registerPage.exisistingUsername);
-  await expect(page.locator(registerPage.errorMessage)).toBeVisible();
-  await expect(page.locator(registerPage.errorMessage)).toHaveText(
-    "Username already exists"
+  await expect(page.locator(registerPage.errorMessages)).toBeVisible();
+  await expect(page.locator(registerPage.errorMessages)).toHaveText(
+    ERROR_MESSAGES["USERNAME_EXISTS"]
   );
 });
 
@@ -63,7 +64,7 @@ test("Negative-Register with invalid email format", async ({ page }) => {
   await registerPage.invalidRegister(page, registerPage.invalidEmailFormat);
   await expect(page.locator(registerPage.errorMessage)).toBeVisible();
   await expect(page.locator(registerPage.errorMessage)).toHaveText(
-    "Invalid email format"
+    ERROR_MESSAGES["INVALID_EMAIL_FORMAT"]
   );
 });
 test("Negative-Register with password too short", async ({ page }) => {
@@ -71,7 +72,7 @@ test("Negative-Register with password too short", async ({ page }) => {
   await registerPage.invalidRegister(page, registerPage.shortPassword);
   await expect(page.locator(registerPage.errorMessage)).toBeVisible();
   await expect(page.locator(registerPage.errorMessage)).toHaveText(
-    "Password must be at least 8 characters long"
+    ERROR_MESSAGES["PASSWORD_TOO_SHORT"]
   );
 });
 
@@ -91,4 +92,11 @@ test("Negative-Login with incorrect password", async ({ page }) => {
     "Incorrect password"
   );
 });
-//mala izmena
+test("Negative-Login with empty fields", async ({ page }) => {
+  const loginPage = new LoginPage(page);
+  await loginPage.invalidLogin(page, loginPage.emptyFields);
+  await expect(page.locator(loginPage.errorMessage)).toBeVisible();
+  await expect(page.locator(loginPage.errorMessage)).toHaveText(
+    "Please fill in all fields"
+  );
+});
