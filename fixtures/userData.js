@@ -9,3 +9,9 @@ export const generateUserCredentials = (length) => {
 
     return {username, email, password};
 }
+
+const VALID_USER_DATA = {
+    username: 'test',
+    email: 'test@mail.com',
+    password: 'test123'
+}
