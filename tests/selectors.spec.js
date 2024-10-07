@@ -1,7 +1,6 @@
-
 import { test, expect } from "@playwright/test";
 
-test.describe("test suite", async() =>{
+test.describe("test suite",() =>{
   test.beforeEach('visit app', async({page})=>{
     await page.goto("https://automaticityacademy.ngrok.app")
 
