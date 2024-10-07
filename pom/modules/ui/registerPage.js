@@ -9,11 +9,10 @@ export class RegisterPage {
         this.submitButton = page.locator("button");
     }
 
-   async register(username,email, password) {
-        await this.usernameInput.fill(username);
-        await this.emailInput.fill(email);
-        await this.passwordInput.fill(password);
-        await this.submitButton.click()
-    }
-
+  async register(username, email, password) {
+    await this.usernameInput.fill(username);
+    await this.emailInput.fill(email);
+    await this.passwordInput.fill(password);
+    await this.submitButton.click();
+  }
 }

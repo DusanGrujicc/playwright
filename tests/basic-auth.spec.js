@@ -1,11 +1,5 @@
 import { test, expect } from "@playwright/test";
-import {
-  generateUserCredentials,
-  HEADING,
-  URLS,
-  utils,
-  errorMessages,
-} from "../fixtures";
+import { generateUserCredentials, HEADING, URLS } from "../fixtures";
 import { LoginPage } from "../pom/modules/ui/loginPage";
 import { RegisterPage } from "../pom/modules/ui/registerPage";
 import { ERROR_MESSAGES } from "../fixtures/errorMessages";
@@ -48,55 +42,60 @@ test.describe("registed a user and log in", () => {
     await page.waitForURL(URLS["DASHBOARD"]);
     await expect(page.getByText(HEADING["DASHBOARD"])).toBeVisible();
   });
-});
 
-test("Negative-Registe with existing username", async ({ page }) => {
-  const registerPage = new RegisterPage(page);
-  await registerPage.invalidRegister(page, registerPage.exisistingUsername);
-  await expect(page.locator(registerPage.errorMessages)).toBeVisible();
-  await expect(page.locator(registerPage.errorMessages)).toHaveText(
-    ERROR_MESSAGES["USERNAME_EXISTS"]
-  );
-});
+  test("Negative-Register with existing username", async ({ page }) => {
+    const registerPage = new RegisterPage(page);
 
-test("Negative-Register with invalid email format", async ({ page }) => {
-  const registerPage = new RegisterPage(page);
-  await registerPage.invalidRegister(page, registerPage.invalidEmailFormat);
-  await expect(page.locator(registerPage.errorMessage)).toBeVisible();
-  await expect(page.locator(registerPage.errorMessage)).toHaveText(
-    ERROR_MESSAGES["INVALID_EMAIL_FORMAT"]
-  );
-});
-test("Negative-Register with password too short", async ({ page }) => {
-  const registerPage = new RegisterPage(page);
-  await registerPage.invalidRegister(page, registerPage.shortPassword);
-  await expect(page.locator(registerPage.errorMessage)).toBeVisible();
-  await expect(page.locator(registerPage.errorMessage)).toHaveText(
-    ERROR_MESSAGES["PASSWORD_TOO_SHORT"]
-  );
-});
+    const { username, email, password } = registerPage.existingUsername;
+    await registerPage.invalidRegister(username, email, password);
 
-test("Negative-Login with non-existent username", async ({ page }) => {
-  const loginPage = new LoginPage(page);
-  await loginPage.invalidLogin(page, loginPage.nonExistentUsername);
-  await expect(page.locator(loginPage.errorMessage)).toBeVisible();
-  await expect(page.locator(loginPage.errorMessage)).toHaveText(
-    "Username does not exist"
-  );
-});
-test("Negative-Login with incorrect password", async ({ page }) => {
-  const loginPage = new LoginPage(page);
-  await loginPage.invalidLogin(page, loginPage.incorrectPassword);
-  await expect(page.locator(loginPage.errorMessage)).toBeVisible();
-  await expect(page.locator(loginPage.errorMessage)).toHaveText(
-    "Incorrect password"
-  );
-});
-test("Negative-Login with empty fields", async ({ page }) => {
-  const loginPage = new LoginPage(page);
-  await loginPage.invalidLogin(page, loginPage.emptyFields);
-  await expect(page.locator(loginPage.errorMessage)).toBeVisible();
-  await expect(page.locator(loginPage.errorMessage)).toHaveText(
-    "Please fill in all fields"
-  );
+    await expect(registerPage.errorMessage).toBeVisible();
+    await expect(registerPage.errorMessage).toHaveText(
+      ERROR_MESSAGES.USERNAME_EXISTS
+    );
+  });
+
+  test("Negative-Register with invalid email format", async ({ page }) => {
+    const registerPage = new RegisterPage(page);
+    await registerPage.invalidRegister(page, registerPage.invalidEmailFormat);
+    await expect(page.locator(registerPage.errorMessage)).toBeVisible();
+    await expect(page.locator(registerPage.errorMessage)).toHaveText(
+      ERROR_MESSAGES["INVALID_EMAIL_FORMAT"]
+    );
+  });
+  test("Negative-Register with password too short", async ({ page }) => {
+    const registerPage = new RegisterPage(page);
+    await registerPage.invalidRegister(page, registerPage.shortPassword);
+    await expect(
+      page.getByText(ERROR_MESSAGES["PASSWORD_TOO_SHORT"])
+    ).toBeVisible();
+    await expect(
+      page.getByText(ERROR_MESSAGES["PASSWORD_TOO_SHORT"])
+    ).toHaveText();
+  });
+
+  test("Negative-Login with non-existent username", async ({ page }) => {
+    const loginPage = new LoginPage(page);
+    await loginPage.invalidLogin(page, loginPage.nonExistentUsername);
+    await expect(page.locator(loginPage.errorMessage)).toBeVisible();
+    await expect(page.locator(loginPage.errorMessage)).toHaveText(
+      "Username does not exist"
+    );
+  });
+  test("Negative-Login with incorrect password", async ({ page }) => {
+    const loginPage = new LoginPage(page);
+    await loginPage.invalidLogin(page, loginPage.incorrectPassword);
+    await expect(page.locator(loginPage.errorMessage)).toBeVisible();
+    await expect(page.locator(loginPage.errorMessage)).toHaveText(
+      "Incorrect password"
+    );
+  });
+  test("Negative-Login with empty fields", async ({ page }) => {
+    const loginPage = new LoginPage(page);
+    await loginPage.invalidLogin(page, loginPage.emptyFields);
+    await expect(page.locator(loginPage.errorMessage)).toBeVisible();
+    await expect(page.locator(loginPage.errorMessage)).toHaveText(
+      "Please fill in all fields"
+    );
+  });
 });
