@@ -15,4 +15,9 @@ export class RegisterPage {
     await this.passwordInput.fill(password);
     await this.submitButton.click();
   }
+
+ 
+async invalidRegister (username,password,email) {
+    await this.register 
+}
 }

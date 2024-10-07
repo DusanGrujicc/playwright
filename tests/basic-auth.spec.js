@@ -45,12 +45,9 @@ test.describe("registed a user and log in", () => {
 
   test("Negative-Register with existing username", async ({ page }) => {
     const registerPage = new RegisterPage(page);
-
-    const { username, email, password } = registerPage.existingUsername;
-    await registerPage.invalidRegister(username, email, password);
-
-    await expect(registerPage.errorMessage).toBeVisible();
-    await expect(registerPage.errorMessage).toHaveText(
+     await registerPage.invalidRegister(username, email, password);
+     await expect(registerPage.errorMessage).toBeVisible();
+     await expect(registerPage.errorMessage).toHaveText(
       ERROR_MESSAGES.USERNAME_EXISTS
     );
   });
