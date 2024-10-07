@@ -1,6 +1,5 @@
 import { test, expect } from "@playwright/test";
 import { LoginPage } from "../pom/modules/ui/loginPage";
-import exp from "constants";
 
 let loginPage;
 test.describe("log in",()=>{
