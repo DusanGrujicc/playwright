@@ -1,20 +1,20 @@
-class RegisterApi {
+
+import { BaseAPI } from "./baseAPI";
+
+
+
+
+
+export class RegisterApi extends BaseAPI{
     constructor (page){
-        this.page = page
-    }
+super(page) 
+this.endpoint = '/api/v1/auth/register'
 
+   }
+async register (payload){
+    return await this.post(this.endpoint, payload)        
 
-async registerViable (username,email,password){
-    let response = await this.page.request.post('/api/v1/auth/register', {
-        headers : {Accept:"application/json" },
-        data:{
-            username: username,
-            email:email,
-            password:password,
-        },
-    });
-    let responseJson = await response.json()
+    };
 
-    return responseJson
 }
-}
+

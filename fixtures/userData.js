@@ -10,8 +10,8 @@ export const generateUserCredentials = (length) => {
     return {username, email, password};
 }
 
-const VALID_USER_DATA = {
-    username: 'test',
-    email: 'test@mail.com',
+export const VALID_LOGIN_PAYLOAD = {
+    username: "dusan123",
+    email: 'filip@test.com',
     password: 'test123'
 }

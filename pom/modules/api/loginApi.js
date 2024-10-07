@@ -1,21 +1,16 @@
- export class LoginApi {
+ import { BaseAPI } from "./baseAPI";
+ 
+ export class LoginApi extends BaseAPI {
     constructor (page) {
-        this.page = page;
+        super(page)
+        this.endpoint = '/api/v1/auth/login'
     }
 
-    async loginViable(email,password){
-        let response = await this.page.request.post('/api/v1/auth/login', {
-        
-            headers: {Accept:"application"},
-            data:{
-                email:email,
-                password:password,
-            },
+    async login(payload){
+        return await this.post(this.endpoint, payload)        
+          
         
         
-    });
-    let responseJson = await response.json()
-
-    return responseJson
-}
+    };
+   
 }
