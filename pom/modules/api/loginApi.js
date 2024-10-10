@@ -8,9 +8,6 @@
 
     async login(payload){
         return await this.post(this.endpoint, payload)        
-          
-        
-        
     };
    
 }
