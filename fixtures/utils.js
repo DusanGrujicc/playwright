@@ -16,4 +16,7 @@ const fillAndSubmitForm = async (page, fields, values) => {
   await page.locator("button").click();
 };
 
-export { generateRandomString, fillAndSubmitForm };
+const generateRandomNumber = (max) => {
+  return Math.floor(Math.random() * (max - 1) + 1);
+};
+export { generateRandomString, fillAndSubmitForm, generateRandomNumber };

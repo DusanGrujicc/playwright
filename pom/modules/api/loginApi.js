@@ -1,16 +1,17 @@
- import { BaseAPI } from "./baseAPI";
- 
- export class LoginApi extends BaseAPI {
-    constructor (page) {
-        super(page)
-        this.endpoint = '/api/v1/auth/login'
-    }
+import { ENDPOINTS } from "../../../fixtures/pages";
+import { BaseAPI } from "./baseAPI";
+export class LoginApi extends BaseAPI {
+  constructor(page, token = "") {
+    super(page, token);
+  }
 
-    async login(payload){
-        return await this.post(this.endpoint, payload)        
-          
-        
-        
-    };
-   
+  async loginWithApi(email, password) {
+    return await this.page.request.post(ENDPOINTS["LOGIN_ENDPOINT"], {
+      headers: this.getHeaders(),
+      data: {
+        email: email,
+        password: password,
+      },
+    });
+  }
 }
