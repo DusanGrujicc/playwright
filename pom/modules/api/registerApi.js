@@ -1,16 +1,16 @@
-
-import { BaseAPI } from "./baseAPI";
-
-export class RegisterApi extends BaseAPI{
-    constructor (page){
-super(page) 
-this.endpoint = '/api/v1/auth/register'
-
-   }
-async register (payload){
-    return await this.post(this.endpoint, payload)        
-    
-};
-
+import { ENDPOINTS } from "../../../fixtures/pages";
+export class RegisterApi {
+  constructor(page) {
+    this.page = page;
+  }
+  async registerWithApi(username, email, password) {
+    return await this.page.request.post(ENDPOINTS["REGISTER_ENDPOINT"], {
+      headers: { Accept: "application/json" },
+      data: {
+        username: username,
+        email: email,
+        password: password,
+      },
+    });
+  }
 }
-
