@@ -1,11 +1,12 @@
 import { ENDPOINTS } from "../../../fixtures/pages";
-export class RegisterApi {
-  constructor(page) {
-    this.page = page;
+import { BaseAPI } from "./baseAPI";
+export class RegisterApi extends BaseAPI {
+  constructor(page, token = "") {
+    super(page, token);
   }
   async registerWithApi(username, email, password) {
     return await this.page.request.post(ENDPOINTS["REGISTER_ENDPOINT"], {
-      headers: { Accept: "application/json" },
+      headers: this.getHeaders(),
       data: {
         username: username,
         email: email,
