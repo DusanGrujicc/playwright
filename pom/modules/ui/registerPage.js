@@ -1,13 +1,13 @@
 export class RegisterPage {
-    constructor(page){
-        this.page = page;
-        this.heading = page.locator('h1');
-        this.link = page.locator('form >> a')
-        this.usernameInput = page.locator("#username");
-        this.emailInput = page.locator("#email");
-        this.passwordInput = page.locator("#password");
-        this.submitButton = page.locator("button");
-    }
+  constructor(page) {
+    this.page = page;
+    this.heading = page.locator("h1");
+    this.link = page.locator("form >> a");
+    this.usernameInput = page.locator("#username");
+    this.emailInput = page.locator("#email");
+    this.passwordInput = page.locator("#password");
+    this.submitButton = page.locator("button");
+  }
 
   async register(username, email, password) {
     await this.usernameInput.fill(username);
@@ -15,9 +15,4 @@ export class RegisterPage {
     await this.passwordInput.fill(password);
     await this.submitButton.click();
   }
-
- 
-async invalidRegister (username,password,email) {
-    await this.register 
-}
 }
