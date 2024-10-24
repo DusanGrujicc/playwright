@@ -47,7 +47,7 @@ test.describe("customers API tests", () =>{
             expect(response.customer.first_name).toBe(`Updated ${customerInfo.first_name}`)
         })
 
-        test.only("should delete last customer", async()=>{
+        test("should delete last customer", async()=>{
             const allCustomers = await customerAPI.getAllCustomers();
             const lastCustomerId = allCustomers.customers.length;
             const response = await customerAPI.deleteCustomer(lastCustomerId)
